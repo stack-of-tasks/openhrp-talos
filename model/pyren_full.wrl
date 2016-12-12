@@ -1,0 +1,989 @@
+#VRML V2.0 utf8
+
+PROTO Joint [
+    exposedField     SFVec3f      center              0 0 0
+    exposedField     MFNode       children            []
+    exposedField     MFFloat      llimit              []
+    exposedField     MFFloat      lvlimit             []
+    exposedField     SFRotation   limitOrientation    0 0 1 0
+    exposedField     SFString     name                ""
+    exposedField     SFRotation   rotation            0 0 1 0
+    exposedField     SFVec3f      scale               1 1 1
+    exposedField     SFRotation   scaleOrientation    0 0 1 0
+    exposedField     MFFloat      stiffness           [ 0 0 0 ]
+    exposedField     SFVec3f      translation         0 0 0
+    exposedField     MFFloat      ulimit              []
+    exposedField     MFFloat      uvlimit             []
+    exposedField     SFString     jointType           ""
+    exposedField     SFInt32      jointId             -1
+    exposedField     SFVec3f     jointAxis           0 0 1
+
+    exposedField     SFFloat      gearRatio           1
+    exposedField     SFFloat      gearEfficiency      1
+    exposedField     SFFloat      rotorInertia        0
+    exposedField     SFFloat      rotorResistor       0
+    exposedField     SFFloat      torqueConst         1
+    exposedField     SFFloat      encoderPulse        1
+]
+{
+    Transform {
+        center           IS center
+        children         IS children
+        rotation         IS rotation
+        scale            IS scale
+        scaleOrientation IS scaleOrientation
+        translation      IS translation
+    }
+}
+
+PROTO Segment [
+    field           SFVec3f     bboxCenter        0 0 0
+    field           SFVec3f     bboxSize          -1 -1 -1
+    exposedField    SFVec3f     centerOfMass      0 0 0
+    exposedField    MFNode      children          [ ]
+    exposedField    SFNode      coord             NULL
+    exposedField    MFNode      displacers        [ ]
+    exposedField    SFFloat     mass              0 
+    exposedField    MFFloat     momentsOfInertia  [ 0 0 0 0 0 0 0 0 0 ]
+    exposedField    SFString    name              ""
+    eventIn         MFNode      addChildren
+    eventIn         MFNode      removeChildren
+]
+{
+    Group {
+        addChildren    IS addChildren
+        bboxCenter     IS bboxCenter
+        bboxSize       IS bboxSize
+        children       IS children
+        removeChildren IS removeChildren
+    }
+}
+
+PROTO Humanoid [
+    field           SFVec3f    bboxCenter            0 0 0
+    field           SFVec3f    bboxSize              -1 -1 -1
+    exposedField    SFVec3f    center                0 0 0
+    exposedField    MFNode     humanoidBody          [ ]
+    exposedField    MFString   info                  [ ]
+    exposedField    MFNode     joints                [ ]
+    exposedField    SFString   name                  ""
+    exposedField    SFRotation rotation              0 0 1 0
+    exposedField    SFVec3f    scale                 1 1 1
+    exposedField    SFRotation scaleOrientation      0 0 1 0
+    exposedField    MFNode     segments              [ ]
+    exposedField    MFNode     sites                 [ ]
+    exposedField    SFVec3f    translation           0 0 0
+    exposedField    SFString   version               "1.1"
+    exposedField    MFNode     viewpoints            [ ]
+]
+{
+  Transform {
+    bboxCenter       IS bboxCenter
+    bboxSize         IS bboxSize
+    center           IS center
+    rotation         IS rotation
+    scale            IS scale
+    scaleOrientation IS scaleOrientation
+    translation      IS translation
+    children [
+      Group {
+        children IS viewpoints
+      }
+      Group {
+        children IS humanoidBody 
+      }
+    ]
+  }
+}
+
+PROTO VisionSensor [
+  exposedField SFVec3f    translation       0 0 0
+  exposedField SFRotation rotation              0 0 1 0
+  #exposedField SFRotation orientation       0 0 1 0
+  exposedField SFFloat    fieldOfView       0.785398
+  exposedField SFString   name              ""
+  exposedField SFFloat    frontClipDistance 0.01
+  exposedField SFFloat    backClipDistance  10.0
+  exposedField SFString   type              "NONE"
+  exposedField SFInt32    sensorId          -1
+  exposedField SFInt32    width             320  # 
+  exposedField SFInt32    height            240  # 
+  exposedField SFFloat    frameRate	    30
+  #exposedField MFNode       children            [] # for me
+]
+{
+  Transform {
+    rotation         IS rotation
+    translation      IS translation
+    #children IS children # for me
+  }
+}
+
+
+PROTO ForceSensor [  
+exposedField SFVec3f maxForce -1 -1 -1
+  exposedField SFVec3f maxTorque -1 -1 -1
+  exposedField SFVec3f translation 0 0 0
+  exposedField SFRotation rotation 0 0 1 0
+  exposedField SFInt32 sensorId -1
+]
+{
+  Transform {
+translation IS translation
+    rotation IS rotation
+  }
+}
+
+PROTO Gyro [
+  exposedField SFVec3f maxAngularVelocity -1 -1 -1
+  exposedField SFVec3f translation 0 0 0
+  exposedField SFRotation rotation 0 0 1 0
+  exposedField SFInt32 sensorId -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation IS rotation
+  }
+}
+
+PROTO AccelerationSensor [
+  exposedField SFVec3f maxAcceleration -1 -1 -1
+  exposedField SFVec3f translation 0 0 0
+  exposedField SFRotation rotation 0 0 1 0
+  exposedField SFInt32 sensorId -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation IS rotation
+  }
+}
+
+PROTO PressureSensor [
+  exposedField SFFloat maxPressure -1
+  exposedField SFVec3f translation 0 0 0
+  exposedField SFRotation rotation 0 0 1 0
+  exposedField SFInt32 sensorId -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation IS rotation
+  }
+}
+
+PROTO PhotoInterrupter [
+  exposedField SFVec3f transmitter 0 0 0
+  exposedField SFVec3f receiver 0 0 0
+  exposedField SFInt32 sensorId -1
+]
+{
+  Transform{
+    children [
+      Transform{
+        translation IS transmitter
+      }
+      Transform{
+        translation IS receiver
+      }
+    ]
+  }
+}
+
+NavigationInfo {
+  avatarSize    0.5
+  headlight     TRUE
+  type  ["EXAMINE", "ANY"]
+}
+
+Background {
+  #skyColor 0.6 0.4 0.4
+  skyColor 0.4 0.6 0.4
+}
+
+Viewpoint {
+  position    3 0 0.835
+  orientation 0.5770 0.5775 0.5775 2.0935
+}
+
+
+DEF talos Humanoid {
+humanoidBody [
+ DEF Waist Joint {
+ jointType "free"
+ translation 0.0 0.0 2.0
+ children [
+   DEF base_link Segment {
+     centerOfMass -0.08222 0.00838 -0.07261
+     mass 13.5381
+     momentsOfInertia [ 0.06989 -0.000117 0.00023 -0.000117 0.039982 -0.001325 0.00023 -0.001325 0.082345 ]
+     children [
+       Inline {
+         url "base_link_collision.wrl"
+       }
+     ]
+   } # End of base_link
+
+   
+     DEF torso_1_joint Joint {
+       jointAxis 0 0 1
+       jointType "rotate"
+       translation 0.0 0.0 0.0722
+       llimit [-1.308996939]
+       ulimit [1.308996939]
+       lvlimit [-5.4]
+       uvlimit [5.4]
+       children [
+         DEF torso_1_link Segment {
+           centerOfMass 0.00013 -1e-05 -0.01306
+           mass 3.02433
+           momentsOfInertia [ 0.007594 1e-06 -4.8e-05 1e-06 0.004292 -1e-06 -4.8e-05 -1e-06 0.007497 ]
+           children [
+             Inline {
+               url "torso_1.wrl"
+             }
+           ]
+         } # End of torso_1_link
+
+         DEF torso_2_joint Joint {
+           jointAxis 0 1 0
+           jointType "rotate"
+           translation 0.0 0.0 0.0
+           llimit [-0.261799387799]
+           ulimit [0.785398163397]
+           lvlimit [-5.4]
+           uvlimit [5.4]
+           children [
+             DEF torso_2_link Segment {
+               centerOfMass -0.04551 -0.00053 0.16386
+               mass 17.55011
+               momentsOfInertia [ 0.373769 0.000639 0.012196 0.000639 0.247902 7e-06 0.012196 7e-06 0.281404 ]
+               children [
+                 Inline {
+                   url "torso_2_collision.wrl"
+                 }
+               ]
+             } # End of torso_2_link
+
+             DEF head_1_joint Joint {
+               jointAxis 0 1 0
+               jointType "rotate"
+               translation 0.0 0.0 0.316
+               llimit [-0.261799387799]
+               ulimit [0.785398163397]
+               lvlimit [-1.0]
+               uvlimit [1.0]
+               children [
+                 DEF head_1_link Segment {
+                   centerOfMass 0.0012 0.00145 0.02165
+                   mass 0.65988
+                   momentsOfInertia [ 0.001221 -4e-06 7e-05 -4e-06 0.000924 -4.1e-05 7e-05 -4.1e-05 0.001033 ]
+                   children [
+                     Inline {
+                       url "head_1_collision.wrl"
+                     }
+                   ]
+                 } # End of head_1_link
+
+                 DEF head_2_joint Joint {
+                   jointAxis 0 0 1
+                   jointType "rotate"
+                   translation 0.0 0.0 0.0
+                   llimit [-1.308996939]
+                   ulimit [1.308996939]
+                   lvlimit [-1.0]
+                   uvlimit [1.0]
+                   children [
+                     DEF head_2_link Segment {
+                       centerOfMass -0.01036 -0.00037 0.13778
+                       mass 1.40353
+                       momentsOfInertia [ 0.007225 -2.5e-05 0.000329 -2.5e-05 0.006873 4.4e-05 0.000329 4.4e-05 0.004373 ]
+                       children [
+                         Inline {
+                           url "head_2_collision.wrl"
+                         }
+                       ]
+                     } # End of head_2_link
+
+                   ]
+                 } # End of head_2_joint
+
+               ]
+             } # End of head_1_joint
+
+             DEF arm_left_1_joint Joint {
+               jointAxis 0 0 1
+               jointType "rotate"
+               translation 0.0 0.1575 0.232
+               llimit [-1.57079632679]
+               ulimit [0.523598775598]
+               lvlimit [-2.7]
+               uvlimit [2.7]
+               children [
+                 DEF arm_left_1_link Segment {
+                   centerOfMass -0.01346 0.0913 0.04812
+                   mass 1.42896
+                   momentsOfInertia [ 0.005551 -0.000731 8e-06 -0.000731 0.001673 -6e-05 8e-06 -6e-05 0.005822 ]
+                   children [
+                     Inline {
+                       url "arm_1_collision.wrl"
+                     }
+                   ]
+                 } # End of arm_left_1_link
+                 DEF arm_left_2_joint Joint {
+                   jointAxis 1 0 0
+                   jointType "rotate"
+                   translation 0.00493 0.1365 0.04673
+                   llimit [0.0]
+                   ulimit [2.87979326579]
+                   lvlimit [-3.66]
+                   uvlimit [3.66]
+                   children [
+                     DEF arm_left_2_link Segment {
+                       centerOfMass 0.02607 0.00049 -0.05209
+                       mass 1.67729
+                       momentsOfInertia [ 0.007087 -1.4e-05 0.002142 -1.4e-05 0.007936 3e-05 0.002142 3e-05 0.003788 ]
+                       children [
+                         Inline {
+                           url "arm_2_collision.wrl"
+                         }
+                       ]
+                     } # End of arm_left_2_link
+
+                     DEF arm_left_3_joint Joint {
+                       jointAxis 0 0 1
+                       jointType "rotate"
+                       translation 0.0 0.0 0.0
+                       llimit [-2.44346095279]
+                       ulimit [2.44346095279]
+                       lvlimit [-4.58]
+                       uvlimit [4.58]
+                       children [
+                         DEF arm_left_3_link Segment {
+                           centerOfMass 0.00841 0.01428 -0.22291
+                           mass 1.47029
+                           momentsOfInertia [ 0.004332 0.000153 -0.000496 0.000153 0.00434 -0.000609 -0.000496 -0.000609 0.002543 ]
+                           children [
+                             Inline {
+                               url "arm_3_collision.wrl"
+                             }
+                           ]
+                         } # End of arm_left_3_link
+
+                         DEF arm_left_4_joint Joint {
+                           jointAxis 0 1 0
+                           jointType "rotate"
+                           translation 0.02 0.0 -0.273
+                           llimit [-2.35619449019]
+                           ulimit [0.0]
+                           lvlimit [-4.58]
+                           uvlimit [4.58]
+                           children [
+                             DEF arm_left_4_link Segment {
+                               centerOfMass -0.00655 -0.02107 -0.02612
+                               mass 1.10216
+                               momentsOfInertia [ 0.002217 -0.000101 0.000288 -0.000101 0.002418 -0.000393 0.000288 -0.000393 0.001115 ]
+                               children [
+                                 Inline {
+                                   url "arm_4_collision.wrl"
+                                 }
+                               ]
+                             } # End of arm_left_4_link
+
+                             DEF arm_left_5_joint Joint {
+                               jointAxis 0 0 1
+                               jointType "rotate"
+                               translation -0.02 0.0 -0.2643
+                               llimit [-2.53072741539]
+                               ulimit [2.53072741539]
+                               lvlimit [-1.95]
+                               uvlimit [1.95]
+                               children [
+                                 DEF arm_left_5_link Segment {
+                                   centerOfMass -6e-05 0.00326 0.07963
+                                   mass 1.77792
+                                   momentsOfInertia [ 0.003495 -1.3e-05 -1e-05 -1.3e-05 0.004368 9.7e-05 -1e-05 9.7e-05 0.002283 ]
+                                   children [
+                                     Inline {
+                                       url "arm_5_collision.wrl"
+                                     }
+                                   ]
+                                 } # End of arm_left_5_link
+
+                                 DEF arm_left_6_joint Joint {
+                                   jointAxis 1 0 0
+                                   jointType "rotate"
+                                   translation 0.0 0.0 0.0
+                                   llimit [-1.3962634016]
+                                   ulimit [1.3962634016]
+                                   lvlimit [-1.76]
+                                   uvlimit [1.76]
+                                   children [
+                                     DEF arm_left_6_link Segment {
+                                       centerOfMass 2e-05 -0.00197 -0.00059
+                                       mass 0.30931
+                                       momentsOfInertia [ 0.000107 0.0 0.0 0.0 0.000141 -0.0 0.0 -0.0 0.000154 ]
+                                       children [
+                                         Inline {
+                                           url "arm_6_collision.wrl"
+                                         }
+                                       ]
+                                     } # End of arm_left_6_link
+
+                                     DEF arm_left_7_joint Joint {
+                                       jointAxis 0 1 0
+                                       jointType "rotate"
+                                       translation 0.0 0.0 0.0
+                                       llimit [-0.698131700798]
+                                       ulimit [0.698131700798]
+                                       lvlimit [-1.76]
+                                       uvlimit [1.76]
+                                       children [
+                                         DEF arm_left_7_link Segment {
+                                           centerOfMass 0.007525 0.001378 -0.02463
+                                           mass 0.308441
+                                           momentsOfInertia [ 0.000309 2e-06 -2e-06 2e-06 0.000219 1.2e-05 -2e-06 1.2e-05 0.000176 ]
+                                           children [
+                                             Inline {
+                                               url "arm_7_collision.wrl"
+                                             }
+                                           ]
+                                         } # End of arm_left_7_link
+
+                                       ]
+                                     } # End of arm_left_7_joint
+
+                                   ]
+                                 } # End of arm_left_6_joint
+
+                               ]
+                             } # End of arm_left_5_joint
+
+                           ]
+                         } # End of arm_left_4_joint
+
+                       ]
+                     } # End of arm_left_3_joint
+
+                   ]
+                 } # End of arm_left_2_joint
+
+               ]
+             } # End of arm_left_1_joint
+
+             DEF arm_right_1_joint Joint {
+               jointAxis 0 0 1
+               jointType "rotate"
+               translation 0.0 -0.1575 0.232
+               llimit [-0.523598775598]
+               ulimit [1.57079632679]
+               lvlimit [-2.7]
+               uvlimit [2.7]
+               children [
+                 DEF arm_right_1_link Segment {
+                   centerOfMass -0.01346 -0.0913 0.04812
+                   mass 1.42896
+                   momentsOfInertia [ 0.005551 -0.000731 8e-06 -0.000731 0.001673 -6e-05 8e-06 -6e-05 0.005822 ]
+                   children [
+                     Inline {
+                       url "arm_1_collision_mirror_Y_v2.wrl"
+                     }
+                   ]
+                 } # End of arm_right_1_link
+
+                 DEF arm_right_2_joint Joint {
+                   jointAxis 1 0 0
+                   jointType "rotate"
+                   translation 0.00493 -0.1365 0.04673
+                   llimit [-2.87979326579]
+                   ulimit [0.0]
+                   lvlimit [-3.66]
+                   uvlimit [3.66]
+                   children [
+                     DEF arm_right_2_link Segment {
+                       centerOfMass 0.02607 0.00049 -0.05209
+                       mass 1.67729
+                       momentsOfInertia [ 0.007087 -1.4e-05 0.002142 -1.4e-05 0.007936 3e-05 0.002142 3e-05 0.003788 ]
+                       children [
+                         Inline {
+                           url "arm_2_collision_mirror_Y_v2.wrl"
+                         }
+                       ]
+                     } # End of arm_right_2_link
+
+                     DEF arm_right_3_joint Joint {
+                       jointAxis 0 0 1
+                       jointType "rotate"
+                       translation 0.0 0.0 0.0
+                       llimit [-2.44346095279]
+                       ulimit [2.44346095279]
+                       lvlimit [-4.58]
+                       uvlimit [4.58]
+                       children [
+                         DEF arm_right_3_link Segment {
+                           centerOfMass 0.00841 0.01428 -0.22291
+                           mass 1.47029
+                           momentsOfInertia [ 0.004332 0.000153 -0.000496 0.000153 0.00434 -0.000609 -0.000496 -0.000609 0.002543 ]
+                           children [
+                             Inline {
+                               url "arm_3_collision_mirror_Y_v2.wrl"
+                             }
+                           ]
+                         } # End of arm_right_3_link
+
+                         DEF arm_right_4_joint Joint {
+                           jointAxis 0 1 0
+                           jointType "rotate"
+                           translation 0.02 0.0 -0.273
+                           llimit [-2.35619449019]
+                           ulimit [0.0]
+                           lvlimit [-4.58]
+                           uvlimit [4.58]
+                           children [
+                             DEF arm_right_4_link Segment {
+                               centerOfMass -0.00655 -0.02107 -0.02612
+                               mass 1.10216
+                               momentsOfInertia [ 0.002217 -0.000101 0.000288 -0.000101 0.002418 -0.000393 0.000288 -0.000393 0.001115 ]
+                               children [
+                                 Inline {
+                                   url "arm_4_collision_mirror_Y_v2.wrl"
+                                 }
+                               ]
+                             } # End of arm_right_4_link
+
+                             DEF arm_right_5_joint Joint {
+                               jointAxis 0 0 1
+                               jointType "rotate"
+                               translation -0.02 0.0 -0.2643
+                               llimit [-2.53072741539]
+                               ulimit [2.53072741539]
+                               lvlimit [-1.95]
+                               uvlimit [1.95]
+                               children [
+                                 DEF arm_right_5_link Segment {
+                                   centerOfMass -6e-05 0.00326 0.07963
+                                   mass 1.77792
+                                   momentsOfInertia [ 0.003495 -1.3e-05 -1e-05 -1.3e-05 0.004368 9.7e-05 -1e-05 9.7e-05 0.002283 ]
+                                   children [
+                                     Inline {
+                                       url "arm_5_collision_mirror_Y_v2.wrl"
+                                     }
+                                   ]
+                                 } # End of arm_right_5_link
+
+                                 DEF arm_right_6_joint Joint {
+                                   jointAxis 1 0 0
+                                   jointType "rotate"
+                                   translation 0.0 0.0 0.0
+                                   llimit [-1.3962634016]
+                                   ulimit [1.3962634016]
+                                   lvlimit [-1.76]
+                                   uvlimit [1.76]
+                                   children [
+                                     DEF arm_right_6_link Segment {
+                                       centerOfMass 2e-05 -0.00197 -0.00059
+                                       mass 0.30931
+                                       momentsOfInertia [ 0.000107 0.0 0.0 0.0 0.000141 -0.0 0.0 -0.0 0.000154 ]
+                                       children [
+                                         Inline {
+                                           url "arm_6_collision_mirror_Y_v2.wrl"
+                                         }
+                                       ]
+                                     } # End of arm_right_6_link
+
+                                     DEF arm_right_7_joint Joint {
+                                       jointAxis 0 1 0
+                                       jointType "rotate"
+                                       translation 0.0 0.0 0.0
+                                       llimit [-0.698131700798]
+                                       ulimit [0.698131700798]
+                                       lvlimit [-1.76]
+                                       uvlimit [1.76]
+                                       children [
+                                         DEF arm_right_7_link Segment {
+                                           centerOfMass 0.007525 0.001378 -0.02463
+                                           mass 0.308441
+                                           momentsOfInertia [ 0.000309 2e-06 -2e-06 2e-06 0.000219 1.2e-05 -2e-06 1.2e-05 0.000176 ]
+                                           children [
+                                             Inline {
+                                               url "arm_7_collision_mirror_Y_v2.wrl"
+                                             }
+                                           ]
+                                         } # End of arm_right_7_link
+
+                                       ]
+                                     } # End of arm_right_7_joint
+
+                                   ]
+                                 } # End of arm_right_6_joint
+
+                               ]
+                             } # End of arm_right_5_joint
+
+                           ]
+                         } # End of arm_right_4_joint
+
+                       ]
+                     } # End of arm_right_3_joint
+
+                   ]
+                 } # End of arm_right_2_joint
+
+               ]
+             } # End of arm_right_1_joint
+
+           ]
+         } # End of torso_2_joint
+	     
+       ]
+     } # End of torso_1_joint
+
+     DEF leg_left_1_joint Joint {
+       jointAxis 0 0 1
+       jointType "rotate"
+       translation -0.02 0.085 -0.27105
+       llimit [-0.349065850399]
+       ulimit [1.57079632679]
+       lvlimit [-3.87]
+       uvlimit [3.87]
+       children [
+         DEF leg_left_1_link Segment {
+           centerOfMass 0.0232 -9e-05 0.04949
+           mass 1.88569
+           momentsOfInertia [ 0.003848 3.2e-05 -0.000826 3.2e-05 0.005994 7.8e-05 -0.000826 7.8e-05 0.003222 ]
+           children [
+             Inline {
+               url "hip_z_lo_res.wrl"
+             }
+           ]
+         } # End of leg_left_1_link
+
+         DEF leg_left_2_joint Joint {
+           jointAxis 1 0 0
+           jointType "rotate"
+           translation 0.0 0.0 0.0
+           llimit [-0.5236]
+           ulimit [0.5236]
+           lvlimit [-5.8]
+           uvlimit [5.8]
+           children [
+             DEF leg_left_2_link Segment {
+               centerOfMass 0.01583 -0.00021 0.00619
+               mass 2.37607
+               momentsOfInertia [ 0.003421 -0.000113 -0.000225 -0.000113 0.004024 -3.1e-05 -0.000225 -3.1e-05 0.004164 ]
+               children [
+                 Inline {
+                   url "hip_x_lo_res.wrl"
+                 }
+               ]
+             } # End of leg_left_2_link
+
+             DEF leg_left_3_joint Joint {
+               jointAxis 0 1 0
+               jointType "rotate"
+               translation 0.0 0.0 0.0
+               llimit [-2.095]
+               ulimit [0.7]
+               lvlimit [-5.8]
+               uvlimit [5.8]
+               children [
+                 DEF leg_left_3_link Segment {
+                   centerOfMass 0.00658 0.06563 -0.17278
+                   mass 6.82734
+                   momentsOfInertia [ 0.123906 -0.000412 -0.002059 -0.000412 0.108447 0.016725 -0.002059 0.016725 0.027812 ]
+                   children [
+                     Inline {
+                       url "hip_y_lo_res.wrl"
+                     }
+                   ]
+                 } # End of leg_left_3_link
+
+                 DEF leg_left_4_joint Joint {
+                   jointAxis 0 1 0
+                   jointType "rotate"
+                   translation 0.0 0.0 -0.38
+                   llimit [0.0]
+                   ulimit [2.618]
+                   lvlimit [-7.0]
+                   uvlimit [7.0]
+                   children [
+                     DEF leg_left_4_link Segment {
+                       centerOfMass 0.0152 0.02331 -0.12063
+                       mass 3.63668
+                       momentsOfInertia [ 0.035315 2.9e-05 -0.000166 2.9e-05 0.029336 -0.001305 -0.000166 -0.001305 0.01174 ]
+                       children [
+                         Inline {
+                           url "knee_lo_res.wrl"
+                         }
+                       ]
+                     } # End of leg_left_4_link
+
+                     DEF leg_left_5_joint Joint {
+                       jointAxis 0 1 0
+                       jointType "rotate"
+                       translation 0.0 0.0 -0.325
+                       llimit [-1.309]
+                       ulimit [0.768]
+                       lvlimit [-5.8]
+                       uvlimit [5.8]
+                       children [
+                         DEF leg_left_5_link Segment {
+                           centerOfMass -0.01106 0.04708 0.05271
+                           mass 1.24433
+                           momentsOfInertia [ 0.011487 -0.000686 -0.000526 -0.000686 0.009526 0.002633 -0.000526 0.002633 0.003908 ]
+                           children [
+                             Inline {
+                               url "ankle_Y_lo_res.wrl"
+                             }
+                           ]
+                         } # End of leg_left_5_link
+
+                         DEF leg_left_6_joint Joint {
+                           jointAxis 1 0 0
+                           jointType "rotate"
+                           translation 0.0 0.0 0.0
+                           llimit [-0.5236]
+                           ulimit [0.5236]
+                           lvlimit [-4.8]
+                           uvlimit [4.8]
+                           children [
+                             DEF leg_left_6_link Segment {
+                               centerOfMass -0.02087 -0.00019 -0.06059
+                               mass 1.59457
+                               momentsOfInertia [ 0.003838 1.6e-05 -0.001041 1.6e-05 0.006572 -1.7e-05 -0.001041 -1.7e-05 0.005044 ]
+                               children [
+                                 Inline {
+                                   url "ankle_X_collision.wrl"
+                                 }
+                               ]
+                             } # End of leg_left_6_link
+
+                           ]
+                         } # End of leg_left_6_joint
+
+                       ]
+                     } # End of leg_left_5_joint
+
+                   ]
+                 } # End of leg_left_4_joint
+
+               ]
+             } # End of leg_left_3_joint
+
+           ]
+         } # End of leg_left_2_joint
+
+       ]
+     } # End of leg_left_1_joint
+
+     DEF leg_right_1_joint Joint {
+       jointAxis 0 0 1
+       jointType "rotate"
+       translation -0.02 -0.085 -0.27105
+       llimit [-1.57079632679]
+       ulimit [0.349065850399]
+       lvlimit [-3.87]
+       uvlimit [3.87]
+       children [
+         DEF leg_right_1_link Segment {
+           centerOfMass 0.0232 -9e-05 0.04949
+           mass 1.88569
+           momentsOfInertia [ 0.003848 3.2e-05 -0.000826 3.2e-05 0.005994 7.8e-05 -0.000826 7.8e-05 0.003222 ]
+           children [
+             Inline {
+               url "hip_z_lo_res_mirror_Y_v2.wrl"
+             }
+           ]
+         } # End of leg_right_1_link
+
+         DEF leg_right_2_joint Joint {
+           jointAxis 1 0 0
+           jointType "rotate"
+           translation 0.0 0.0 0.0
+           llimit [-0.5236]
+           ulimit [0.5236]
+           lvlimit [-5.8]
+           uvlimit [5.8]
+           children [
+             DEF leg_right_2_link Segment {
+               centerOfMass 0.01583 -0.00021 0.00619
+               mass 2.37607
+               momentsOfInertia [ 0.003421 -0.000113 -0.000225 -0.000113 0.004024 -3.1e-05 -0.000225 -3.1e-05 0.004164 ]
+               children [
+                 Inline {
+                   url "hip_x_lo_res_mirror_Y_v2.wrl"
+                 }
+               ]
+             } # End of leg_right_2_link
+
+             DEF leg_right_3_joint Joint {
+               jointAxis 0 1 0
+               jointType "rotate"
+               translation 0.0 0.0 0.0
+               llimit [-2.095]
+               ulimit [0.7]
+               lvlimit [-5.8]
+               uvlimit [5.8]
+               children [
+                 DEF leg_right_3_link Segment {
+                   centerOfMass 0.00658 -0.06563 -0.17278
+                   mass 6.82734
+                   momentsOfInertia [ 0.123906 0.000412 -0.002059 0.000412 0.108447 -0.016725 -0.002059 -0.016725 0.027812 ]
+                   children [
+                     Inline {
+                       url "hip_y_lo_res_mirror_Y_v2.wrl"
+                     }
+                   ]
+                 } # End of leg_right_3_link
+
+                 DEF leg_right_4_joint Joint {
+                   jointAxis 0 1 0
+                   jointType "rotate"
+                   translation 0.0 0.0 -0.38
+                   llimit [0.0]
+                   ulimit [2.618]
+                   lvlimit [-7.0]
+                   uvlimit [7.0]
+                   children [
+                     DEF leg_right_4_link Segment {
+                       centerOfMass 0.0152 -0.02331 -0.12063
+                       mass 3.63668
+                       momentsOfInertia [ 0.035315 -2.9e-05 -0.000166 -2.9e-05 0.029336 0.001305 -0.000166 0.001305 0.01174 ]
+                       children [
+                         Inline {
+                           url "knee_lo_res_mirror_Y_v2.wrl"
+                         }
+                       ]
+                     } # End of leg_right_4_link
+
+                     DEF leg_right_5_joint Joint {
+                       jointAxis 0 1 0
+                       jointType "rotate"
+                       translation 0.0 0.0 -0.325
+                       llimit [-1.309]
+                       ulimit [0.768]
+                       lvlimit [-5.8]
+                       uvlimit [5.8]
+                       children [
+                         DEF leg_right_5_link Segment {
+                           centerOfMass -0.01106 -0.04708 0.05271
+                           mass 1.24433
+                           momentsOfInertia [ 0.011487 0.000686 -0.000526 0.000686 0.009526 -0.002633 -0.000526 -0.002633 0.003908 ]
+                           children [
+                             Inline {
+                               url "ankle_Y_lo_res_mirror_Y_v2.wrl"
+                             }
+                           ]
+                         } # End of leg_right_5_link
+
+                         DEF leg_right_6_joint Joint {
+                           jointAxis 1 0 0
+                           jointType "rotate"
+                           translation 0.0 0.0 0.0
+                           llimit [-0.5236]
+                           ulimit [0.5236]
+                           lvlimit [-4.8]
+                           uvlimit [4.8]
+                           children [
+                             DEF leg_right_6_link Segment {
+                               centerOfMass -0.02087 -0.00019 -0.06059
+                               mass 1.59457
+                               momentsOfInertia [ 0.003838 1.6e-05 -0.001041 1.6e-05 0.006572 -1.7e-05 -0.001041 -1.7e-05 0.005044 ]
+                               children [
+                                 Inline {
+                                   url "ankle_X_collision.wrl"
+                                 }
+                               ]
+                             } # End of leg_right_6_link
+
+                           ]
+                         } # End of leg_right_6_joint
+
+                       ]
+                     } # End of leg_right_5_joint
+
+                   ]
+                 } # End of leg_right_4_joint
+
+               ]
+             } # End of leg_right_3_joint
+
+           ]
+         } # End of leg_right_2_joint
+
+       ]
+     } # End of leg_right_1_joint
+
+   ]
+ } # End of WAIST 
+
+] # End of humanoidBody 
+
+joints [  USE Waist,	
+ USE torso_1_joint,
+ USE torso_2_joint,
+ USE head_1_joint,
+ USE head_2_joint,
+ USE arm_left_1_joint,
+ USE arm_left_2_joint,
+ USE arm_left_3_joint,
+ USE arm_left_4_joint,
+ USE arm_left_5_joint,
+ USE arm_left_6_joint,
+ USE arm_left_7_joint,
+ USE arm_right_1_joint,
+ USE arm_right_2_joint,
+ USE arm_right_3_joint,
+ USE arm_right_4_joint,
+ USE arm_right_5_joint,
+ USE arm_right_6_joint,
+ USE arm_right_7_joint,
+ USE leg_left_1_joint,
+ USE leg_left_2_joint,
+ USE leg_left_3_joint,
+ USE leg_left_4_joint,
+ USE leg_left_5_joint,
+ USE leg_left_6_joint,
+ USE leg_right_1_joint,
+ USE leg_right_2_joint,
+ USE leg_right_3_joint,
+ USE leg_right_4_joint,
+ USE leg_right_5_joint,
+ USE leg_right_6_joint,
+] #joints
+
+segments [  USE base_link,
+  USE torso_1_link,
+  USE torso_2_link,
+  USE head_1_link,
+  USE head_2_link,
+  USE arm_left_1_link,
+  USE arm_left_2_link,
+  USE arm_left_3_link,
+  USE arm_left_4_link,
+  USE arm_left_5_link,
+  USE arm_left_6_link,
+  USE arm_left_7_link,		
+  USE arm_right_1_link,
+  USE arm_right_2_link,
+  USE arm_right_3_link,
+  USE arm_right_4_link,
+  USE arm_right_5_link,
+  USE arm_right_6_link,
+  USE arm_right_7_link,		
+  USE leg_left_1_link,
+  USE leg_left_2_link,
+  USE leg_left_3_link,	
+  USE leg_left_4_link,	
+  USE leg_left_5_link,	
+  USE leg_left_6_link,	  
+  USE leg_right_1_link,
+  USE leg_right_2_link,
+  USE leg_right_3_link,	
+  USE leg_right_4_link,	
+  USE leg_right_5_link,	
+  USE leg_right_6_link,	  
+] #segments
+} # End of talos
+
