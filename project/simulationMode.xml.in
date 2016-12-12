@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grxui>
+    <mode name="Simulation">
+        <item class="com.generalrobotix.ui.item.GrxSimulationItem" name="simulation0" select="true">
+            <property name="integrate" value="true"/>
+            <property name="viewsimulate" value="false"/>
+            <property name="totalTime" value="70.0 "/>
+            <property name="timeStep" value="0.0010 "/>
+            <property name="gravity" value="9.8 "/>
+            <property name="method" value="RUNGE_KUTTA"/>
+        </item>
+        <item class="com.generalrobotix.ui.item.GrxWorldStateItem" name="worldstate0" select="true">
+            <property name="logTimeStep" value="0.0010 "/>
+        </item>
+        <item class="com.generalrobotix.ui.item.GrxModelItem" name="HRP2JRL" select="true" url="@CMAKE_INSTALL_PREFIX@/share/hrp2-14/HRP2JRLBush_main.wrl">
+            <property name="isRobot" value="true"/>
+            <property name="controller" value="HRP2PDController"/>
+            <property name="controlTime" value="0.0010"/>
+            <property name="setupDirectory" value="/opt/grx/HRP2LAAS/bin"/>
+            <property name="setupCommand" value="HRPController.sh"/>
+            <property name="markRadius" value="0.05 "/>
+            <property name="WAIST.translation" value="0.0 0.0 0.6487"/>
+            <property name="WAIST.rotation" value="0.0 1.0 0.0 0.0 "/>
+	    <property name="RLEG_BUSH_Z.mode" value="Torque"/>
+	    <property name="RLEG_BUSH_ROLL.mode" value="Torque"/>
+	    <property name="RLEG_BUSH_PITCH.mode" value="Torque"/>
+	    <property name="LLEG_BUSH_Z.mode" value="Torque"/>
+	    <property name="LLEG_BUSH_ROLL.mode" value="Torque"/>
+	    <property name="LLEG_BUSH_PITCH.mode" value="Torque"/>
+	    <property name="RLEG_JOINT0.angle" value="0.0"/>
+	    <property name="RLEG_JOINT1.angle" value="0.0"/>
+	    <property name="RLEG_JOINT2.angle" value="-0.45379"/>
+	    <property name="RLEG_JOINT3.angle" value="0.87266"/>
+	    <property name="RLEG_JOINT4.angle" value="-0.41888"/>
+	    <property name="RLEG_JOINT5.angle" value="0.0"/>
+	    <property name="LLEG_JOINT0.angle" value="0.0"/>
+	    <property name="LLEG_JOINT1.angle" value="0.0"/>
+	    <property name="LLEG_JOINT2.angle" value="-0.45379"/>
+	    <property name="LLEG_JOINT3.angle" value="0.87266"/>
+	    <property name="LLEG_JOINT4.angle" value="-0.41888"/>
+	    <property name="LLEG_JOINT5.angle" value="0.0"/>	    
+	    <property name="CHEST_JOINT0.angle" value="0.0"/>
+	    <property name="CHEST_JOINT1.angle" value="0.0"/>
+	    <property name="HEAD_JOINT0.angle" value="0.0"/>
+	    <property name="HEAD_JOINT1.angle" value="0.0"/>
+	    <property name="RARM_JOINT0.angle" value="0.2618"/>
+	    <property name="RARM_JOINT1.angle" value="-0.17453"/>
+	    <property name="RARM_JOINT2.angle" value="0.0"/>
+	    <property name="RARM_JOINT3.angle" value="-0.5326"/>
+	    <property name="RARM_JOINT4.angle" value="0.0"/>
+	    <property name="RARM_JOINT5.angle" value="0.0"/>
+	    <property name="RARM_JOINT6.angle" value="0.17453"/>
+	    <property name="LARM_JOINT0.angle" value="0.2618"/>
+	    <property name="LARM_JOINT1.angle" value="0.17453"/>
+	    <property name="LARM_JOINT2.angle" value="0.0"/>
+	    <property name="LARM_JOINT3.angle" value="-0.5326"/>
+	    <property name="LARM_JOINT4.angle" value="0.0"/>
+	    <property name="LARM_JOINT5.angle" value="0.0"/>
+	    <property name="LARM_JOINT6.angle" value="0.17453"/>
+        </item>
+        <item class="com.generalrobotix.ui.item.GrxModelItem" name="longfloor" select="true" url="@CMAKE_INSTALL_PREFIX@/share/openhrp3-simulator-wo-rtm/model/longfloor.wrl">
+            <property name="isRobot" value="false"/>
+            <property name="WAIST.rotation" value="0.0 1.0 0.0 0.0 "/>
+            <property name="WAIST.translation" value="0.0 0.0 -0.1 "/>
+        </item>
+        <item class="com.generalrobotix.ui.item.GrxCollisionPairItem" name="CP#floor#HRP2LAAS" select="true">
+            <property name="objectName1" value="longfloor"/>
+            <property name="objectName2" value="HRP2JRL"/>
+            <property name="staticFriction" value="0.5"/>
+            <property name="slidingFriction" value="0.5"/>
+        </item>
+    </mode>
+</grxui>

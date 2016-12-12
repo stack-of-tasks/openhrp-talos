@@ -1,0 +1,28 @@
+# Launch Model Loader corba server
+rm /tmp/openhrp-model-loader.log
+export HRPMODEL_CUSTOMIZER_PATH=@CMAKE_INSTALL_PREFIX@/lib/customizer
+export BUSH_CUSTOMIZER_CONFIG_PATH=@CMAKE_INSTALL_PREFIX@/share/customizer/HRP2_bush_customizer_param.conf
+echo "HRPMODEL_CUSTOMIZER_PATH=" $HRPMODEL_CUSTOMIZER_PATH
+echo "BUSH_CUSTOMIZER_CONFIG_PATH=" $BUSH_CUSTOMIZER_CONFIG_PATH
+@CMAKE_INSTALL_PREFIX@/bin/openhrp-model-loader &> /tmp/openhrp-model-loader.log &
+
+# Launch Collision detector corba server
+rm /tmp/openhrp-collision-detector.log
+@CMAKE_INSTALL_PREFIX@/bin/openhrp-collision-detector &> /tmp/openhrp-collision-detector.log &
+
+# Launch Dynamics simulator corba server
+rm /tmp/openhrp-aist-dynamics-simulator.log
+@CMAKE_INSTALL_PREFIX@/bin/openhrp-aist-dynamics-simulator &> /tmp/openhrp-aist-dynamics-simulator.log &
+
+# Launch Online viewer corba server
+rm /tmp/gepetto-online-viewer.log
+@CMAKE_INSTALL_PREFIX@/bin/gepetto-online-viewer &> /tmp/gepetto-online-viewer.log &
+
+# Launch SoT-controller corba server
+@CMAKE_INSTALL_PREFIX@/bin/controller-hrp2 /opt/openrobots/lib/libsot-hrp2-14-controller.so @CMAKE_INSTALL_PREFIX@/example/@PROJECT_NAME@/scheduler/etc/PIDgains.dat &
+/bin/sleep 5
+
+# Launch Scheduler of the simulation
+@CMAKE_INSTALL_PREFIX@/example/@PROJECT_NAME@/scheduler/schedulerhrp2 -serverName HRP2PDController -url @CMAKE_INSTALL_PREFIX@/share/openhrp3-simulator-wo-rtm/model/longfloor.wrl /opt/openrobots/share/hrp2-14/HRP2JRLBush_main.wrl 
+
+

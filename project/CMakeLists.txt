@@ -1,0 +1,14 @@
+configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/simulationMode.xml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/simulationMode.xml")
+
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/simulationMode.xml
+  DESTINATION share/@PROJECT_NAME@/project
+  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_READ  WORLD_READ )
+
+
+configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/simulationModeNoBush.xml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/simulationModeNoBush.xml")
+
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/simulationModeNoBush.xml
+  DESTINATION share/@PROJECT_NAME@/project
+  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_READ  WORLD_READ )
