@@ -1,0 +1,189 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: Pyrene
+
+links:
+  -
+    name: BASE
+    jointType: free
+    translation: [ -0.05709419, 0.00153054, -0.0762521]
+    rotation: [ 0.0, 0.0, 1.0, 0.0 ]
+    mass: 15.36284
+    centerOfMass: [ -0.05709419, 0.00153054, -0.0762521 ]
+    inertia: [
+      0.20105075811, 0.00023244734, 0.0040167728,
+     0.00023244734,  0.08411496729, -0.00087206649,
+      0.0040167728, -0.00087206649, 0.2318908414
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/base_link_lo_res.stl" } }
+      Collision: { resource: { uri: "stlparts/base_link_collision.stl" } }
+  -
+    name: torso_1_joint
+    parent: BASE
+    translation: [ 0.0, 0.0, 0.0722]
+    rotation: [ 0.0, 0.0, 1.0, 0.0 ]    
+    jointType: revolute
+    jointAxis: [ 0, 0, 1]
+    jointId: 0
+    jointRange: [ -72.34, 72.34] 
+    jointVelocityRange: [ -5.4, 5.4]
+    mass: 2.294658
+    centerOfMass: [ 0.00078223, 3.528e-05, -0.01782457]
+    inertia: [
+    0.00638508087, -7.107e-08,    -3.065592e-05,
+     -7.107e-08   , 0.00410256102, -1.46946e-06,
+     -3.065592e-05,  -1.46946e-06,    0.00622968815
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/torso_1.stl" } }
+      Collision: { resource: { uri: "stlparts/torso_1.stl" } }
+  -
+    name: torso_2_joint
+    parent: torso_1_joint
+    translation: [ 0.0, 0.0, 0.0]
+    rotation: [ 0, 0, 1, 0 ]        
+    jointType: revolute
+    jointAxis: [ 0, 1, 0]
+    jointId: 1
+    jointRange: [ -13.006 , 42.019 ] 
+    jointVelocityRange: [ -5.4, 5.4 ]
+    mass: 16.97403
+    centerOfMass: [-0.0463563, -0.00099023, 0.1452805]
+    inertia: [
+    0.44372633826,   0.00069132133, -0.01218206353,
+    0.00069132133,   0.2998576068 , -0.00019623338,
+    -0.01218206353, -0.00019623338,  0.32201554742
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/torso_2.stl" } }
+      Collision: { resource: { uri: "stlparts/torso_2_collision.stl" } }
+  -
+    name: head_1_joint
+    parent: torso_2_joint
+    translation: [ 0.0, 0.0, 0.321 ]
+    rotation: [ 0, 0, 1, 0 ]        
+    jointType: revolute
+    jointAxis: [ 0, 1, 0]
+    jointId: 2
+    jointRange: [ -12.004 , 45.017 ] 
+    jointVelocityRange: [ -1.0, 1.0 ]
+    mass: 0.73746
+    centerOfMass: [-0.00157211, -0.00157919, 0.02175767]
+    inertia: [
+    0.00224878584, 4.69375e-06,    8.55557e-05,
+    4.69375e-06	 , 0.00111158492, -4.132536e-05,
+    8.55557e-05	, -4.132536e-05	, 0.00205225921
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/head_1.stl" } }
+      Collision: { resource: { uri: "stlparts/head_1_collision.stl" } }
+  -
+    name: head_2_joint
+    parent: head_1_joint
+    translation: [ 0.0, 0.0, 0.0 ]
+    rotation: [ 0, 0, 1, 0 ]    
+    jointType: revolute
+    jointAxis: [ 0, 0, 1]
+    jointId: 3
+    jointRange: [ -75.032, 75.032 ] 
+    jointVelocityRange: [ -1.0, 1.0 ]
+    mass: 1.4439
+    centerOfMass: [0.01002657, 5.218e-05, 0.14136068]
+    inertia: [
+    0.01084624339, 1.050889e-05, 0.00041594252,
+    1.050889e-05 , 0.0109569176, 2.367831e-05,
+    0.00041594252, 2.367831e-05, 0.00571698895
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/head_2.stl" } }
+      Collision: { resource: { uri: "stlparts/head_2_collision.stl" } }
+  -
+    name: arm_left_1_joint
+    parent: torso_1_joint
+    translation: [ 0.0, 0.1575, 0.232]
+    rotation: [ 0.0, 0.0, 1.0, 0.0]    
+    jointType: revolute
+    jointAxis: [ 0, 0, 1]
+    jointId: 4
+    jointRange: [-90.045, 45.022 ]
+    jointVelocityRange: [ -2.7, 2.7 ]
+    mass: 2.714567
+    centerOfMass: [ -0.0002762, 0.10060223, 0.04437419 ]
+    inertia: [
+    0.01237818683, -3.625571e-05, 7.14472e-05,
+    -3.625571e-05,  0.004191372, -0.00023639064,
+    7.14472e-05 , -0.00023639064, 0.01358161109
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/arm_1.stl" } }
+      Collision: { resource: { uri: "stlparts/arm_1_collision.stl" } }
+  -
+    name: arm_left_2_joint
+    parent: arm_left_1_joint
+    translation: [ 0.00493, 0.1365, 0.04673 ]
+    rotation: [ 0.0, 0.0, 1.0, 0.0]    
+    jointType: revolute
+    jointAxis: [ 1, 0, 0]
+    jointId: 5
+    jointRange: [  0.50025,   164.58344 ]
+    jointVelocityRange: [ -3.66, 3.66 ]
+    mass: 2.425086
+    centerOfMass: [ 0.01438831, 0.00092938, -0.08684268 ]
+    inertia: [
+     0.01297822101,  1.208791e-05, -0.00320370433,
+     1.208791e-05,   0.01380870278,-0.00012770059,
+    -0.00320370433, -0.00012770059, 0.00478856621
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/arm_2.stl" } }
+      Collision: { resource: { uri: "stlparts/arm_2_collision.stl" } }
+  -
+    name: arm_left_3_joint
+    parent: arm_left_2_joint
+    translation: [ 0.02, 0.0, -0.273 ]
+    rotation: [ 0.0, 0.0, 1.0, 0.0]    
+    jointType: revolute
+    jointAxis: [ 1, 0, 0]
+    jointId: 6
+    jointRange: [ -139.07,   139.07 ]
+    jointVelocityRange: [ -4.58, 4.58 ]
+    mass: 2.208741
+    centerOfMass: [ 0.0136084, 0.01241619, -0.2499004 ]
+    inertia: [
+    0.00718831493, -0.00011563551, 0.00075969733,
+   -0.00011563551,  0.00693528503, 0.00042134743,
+    0.00075969733,  0.00042134743, 0.00388359007
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/arm_3.stl" } }
+      Collision: { resource: { uri: "stlparts/arm_3_collision.stl" } }
+  -
+    name: arm_left_4_joint
+    parent: arm_left_3_joint
+    translation: [ 0.0, 0.0, 0.0 ]
+    rotation: [ 0.0, 0.0, 1.0, 0.0]
+    jointType: revolute
+    jointAxis: [ 0, 0, 1]
+    jointId: 7
+    jointRange: [ -2.42600766027, 2.42600766027 ]
+    jointVelocityRange: [ -4.58, 4.58 ]
+    mass: 0.877346
+    centerOfMass: [ -0.00742138, -0.0213895, -0.03312656 ]
+    inertia: [
+    0.00251207716, 0.00010070062, -0.00032788214,
+    0.00010070062, 0.00275869324,  0.00040022227,
+   -0.00032788214, 0.00040022227,  0.00120735959
+    ]
+    elements:
+      Visual: { resource: { uri: "stlparts/arm_4.stl" } }
+      Collision: { resource: { uri: "stlparts/arm_4_collision.stl" } }
+
+
+standardPose: [ 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 
+		0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0,
+		0, 0 ]

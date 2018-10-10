@@ -100,15 +100,15 @@ PROTO VisionSensor [
   exposedField SFVec3f    translation       0 0 0
   exposedField SFRotation rotation              0 0 1 0
   #exposedField SFRotation orientation       0 0 1 0
-  exposedField SFFloat    fieldOfView       0.785398
   exposedField SFString   name              ""
-  exposedField SFFloat    frontClipDistance 0.01
-  exposedField SFFloat    backClipDistance  10.0
+  #exposedField SFFloat    frontClipDistance 0.01
+  #exposedField SFFloat    backClipDistance  10.0
   exposedField SFString   type              "NONE"
   exposedField SFInt32    sensorId          -1
   exposedField SFInt32    width             320  # 
   exposedField SFInt32    height            240  # 
   exposedField SFFloat    frameRate	    30
+  exposedField SFFloat    fieldOfView       0.785398
   #exposedField MFNode       children            [] # for me
 ]
 {
