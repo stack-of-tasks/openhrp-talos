@@ -1,0 +1,1711 @@
+#VRML V2.0 utf8
+
+PROTO Joint [
+  exposedField     SFVec3f      center              0 0 0
+  exposedField     MFNode       children            []
+  exposedField     MFFloat      llimit              []
+  exposedField     MFFloat      lvlimit             []
+  exposedField     SFRotation   limitOrientation    0 0 1 0
+  exposedField     SFString     name                ""
+  exposedField     SFRotation   rotation            0 0 1 0
+  exposedField     SFVec3f      scale               1 1 1
+  exposedField     SFRotation   scaleOrientation    0 0 1 0
+  exposedField     MFFloat      stiffness           [ 0 0 0 ]
+  exposedField     SFVec3f      translation         0 0 0
+  exposedField     MFFloat      ulimit              []
+  exposedField     MFFloat      uvlimit             []
+  exposedField     SFString     jointType           ""
+  exposedField     SFInt32      jointId             -1
+  exposedField     SFVec3f      jointAxis           0 0 1
+
+  exposedField     SFFloat      gearRatio           1
+  exposedField     SFFloat      rotorInertia        0
+  exposedField     SFFloat      rotorResistor       0
+  exposedField     SFFloat      torqueConst         1
+  exposedField     SFFloat      encoderPulse        1
+  exposedField     MFFloat      climit              []
+]
+{
+  Transform {
+    center           IS center
+    children         IS children
+    rotation         IS rotation
+    scale            IS scale
+    scaleOrientation IS scaleOrientation
+    translation      IS translation
+  }
+}
+
+PROTO Segment [
+  field           SFVec3f     bboxCenter        0 0 0
+  field           SFVec3f     bboxSize          -1 -1 -1
+  exposedField    SFVec3f     centerOfMass      0 0 0
+  exposedField    MFNode      children          [ ]
+  exposedField    SFNode      coord             NULL
+  exposedField    MFNode      displacers        [ ]
+  exposedField    SFFloat     mass              0
+  exposedField    MFFloat     momentsOfInertia  [ 0 0 0 0 0 0 0 0 0 ]
+  exposedField    SFString    name              ""
+  eventIn         MFNode      addChildren
+  eventIn         MFNode      removeChildren
+]
+{
+  Group {
+    addChildren    IS addChildren
+    bboxCenter     IS bboxCenter
+    bboxSize       IS bboxSize
+    children       IS children
+    removeChildren IS removeChildren
+  }
+}
+
+PROTO Surface [
+ field   SFVec3f bboxCenter 0 0 0
+ field   SFVec3f bboxSize   -1 -1 -1
+ field   MFNode  visual     [ ]
+ field   MFNode  collision  [ ]
+ eventIn MFNode  addChildren
+ eventIn MFNode  removeChildren
+]
+{
+  Group {
+    addChildren    IS addChildren
+    bboxCenter     IS bboxCenter
+    bboxSize       IS bboxSize
+    children       IS visual
+    removeChildren IS removeChildren
+  }
+}
+
+PROTO Humanoid [
+  field           SFVec3f    bboxCenter            0 0 0
+  field           SFVec3f    bboxSize              -1 -1 -1
+  exposedField    SFVec3f    center                0 0 0
+  exposedField    MFNode     humanoidBody          [ ]
+  exposedField    MFString   info                  [ ]
+  exposedField    MFNode     joints                [ ]
+  exposedField    SFString   name                  ""
+  exposedField    SFRotation rotation              0 0 1 0
+  exposedField    SFVec3f    scale                 1 1 1
+  exposedField    SFRotation scaleOrientation      0 0 1 0
+  exposedField    MFNode     segments              [ ]
+  exposedField    MFNode     sites                 [ ]
+  exposedField    SFVec3f    translation           0 0 0
+  exposedField    SFString   version               "1.1"
+  exposedField    MFNode     viewpoints            [ ]
+]
+{
+  Transform {
+    bboxCenter       IS bboxCenter
+    bboxSize         IS bboxSize
+    center           IS center
+    rotation         IS rotation
+    scale            IS scale
+    scaleOrientation IS scaleOrientation
+    translation      IS translation
+    children [
+      Group {
+        children IS viewpoints
+      }
+    ]
+  }
+}
+
+PROTO ExtraJoint [
+  exposedField SFString link1Name ""
+  exposedField SFString link2Name ""
+  exposedField SFVec3f  link1LocalPos 0 0 0
+  exposedField SFVec3f  link2LocalPos 0 0 0
+  exposedField SFString jointType "xyz"
+  exposedField SFVec3f  jointAxis 1 0 0
+]
+{
+}
+
+
+
+DEF base_link Humanoid {
+  humanoidBody [
+    DEF base_link Joint {
+      jointType "free"
+      translation 0.0 0.0 0.0
+      rotation 0 1 0 0
+      children [
+        DEF base_link Segment {
+          mass 15.3628
+          centerOfMass -0.057094 0.001531 -0.076252
+          momentsOfInertia [0.201051 0.000232447 0.00401677 0.000232447 0.084115 -0.000872066 0.00401677 -0.000872066 0.231891]
+          children [
+            Transform {
+              scale 1.0 1.0 1.0
+              translation 0.0 0.0 0.0
+              rotation 0 1 0 0
+              children [
+                Inline {
+                  url "talos-base_link-talos-base_link_visual.wrl"
+                }
+              ]
+            }
+          ]
+        }
+            
+        DEF leg_left_1_joint Joint {
+          jointType "rotate"
+          jointAxis 0.0 0.0 1.0
+          jointId 5
+          translation -0.02 0.085 -0.27105
+          rotation 0 1 0 0
+          ulimit 1.5708
+          llimit -0.349066
+          uvlimit 3.87
+          lvlimit -3.87
+          climit [100.0]
+          children [
+            DEF leg_left_1_link Segment {
+              mass 1.84559
+              centerOfMass 0.022479 0.001067 0.031307
+              momentsOfInertia [0.00541534 -0.000154287 0.00131613 -0.000154287 0.00848625 -1.9061e-05 0.00131613 -1.9061e-05 0.00474513]
+              children [
+                Transform {
+                  scale 1.0 1.0 1.0
+                  translation 0.0 0.0 0.0
+                  rotation 0 1 0 0
+                  children [
+                    Inline {
+                      url "talos-leg_left_1_link-talos-leg_left_1_link_visual.wrl"
+                    }
+                  ]
+                }
+              ]
+            }
+                
+            DEF leg_left_2_joint Joint {
+              jointType "rotate"
+              jointAxis 1.0 0.0 0.0
+              jointId 4
+              translation -3.469446951953614e-18 3.0531133177191805e-16 1.6653345369377348e-16
+              rotation 0 1 0 0
+              ulimit 0.5236
+              llimit -0.5236
+              uvlimit 5.8
+              lvlimit -5.8
+              climit [160.0]
+              children [
+                DEF leg_left_2_link Segment {
+                  mass 1.49095
+                  centerOfMass -0.007047 0.025927 0.002734
+                  momentsOfInertia [0.00497152 -0.000131136 -4.86648e-06 -0.000131136 0.00190551 4.58538e-05 -4.86648e-06 4.58538e-05 0.0047429]
+                  children [
+                    Transform {
+                      scale 1.0 1.0 1.0
+                      translation 0.0 0.0 0.0
+                      rotation 0 1 0 0
+                      children [
+                        Inline {
+                          url "talos-leg_left_2_link-talos-leg_left_2_link_visual.wrl"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                    
+                DEF leg_left_3_joint Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 1.0 0.0
+                  jointId 3
+                  translation -3.469446951953614e-18 3.0531133177191805e-16 1.6653345369377348e-16
+                  rotation 0 1 0 0
+                  ulimit 0.7
+                  llimit -2.095
+                  uvlimit 5.8
+                  lvlimit -5.8
+                  climit [160.0]
+                  children [
+                    DEF leg_left_3_link Segment {
+                      mass 6.23987
+                      centerOfMass 0.005852 0.063697 -0.183396
+                      momentsOfInertia [0.153374 0.000689134 0.00168034 0.000689134 0.136481 -0.0218764 0.00168034 -0.0218764 0.0300159]
+                      children [
+                        Transform {
+                          scale 1.0 1.0 1.0
+                          translation 0.0 0.0 0.0
+                          rotation 0 1 0 0
+                          children [
+                            Inline {
+                              url "talos-leg_left_3_link-talos-leg_left_3_link_visual.wrl"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                        
+                    DEF leg_left_4_joint Joint {
+                      jointType "rotate"
+                      jointAxis 0.0 1.0 0.0
+                      jointId 2
+                      translation 0.0 2.220446049250313e-16 -0.37999999999999967
+                      rotation 0 1 0 0
+                      ulimit 2.618
+                      llimit 0.0
+                      uvlimit 7.0
+                      lvlimit -7.0
+                      climit [300.0]
+                      children [
+                        DEF leg_left_4_link Segment {
+                          mass 3.75995
+                          centerOfMass 0.013177 0.029175 -0.115946
+                          momentsOfInertia [0.0428768 0.000437054 0.000782924 0.000437054 0.0359891 0.000377177 0.000782924 0.000377177 0.0136479]
+                          children [
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.0 0.0 0.0
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-leg_left_4_link-talos-leg_left_4_link_visual.wrl"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                            
+                        DEF leg_left_5_joint Joint {
+                          jointType "rotate"
+                          jointAxis 0.0 1.0 0.0
+                          jointId 1
+                          translation 5.898059818321144e-17 8.326672684688674e-17 -0.32499999999999984
+                          rotation 0 1 0 0
+                          ulimit 0.68
+                          llimit -1.27
+                          uvlimit 5.8
+                          lvlimit -5.8
+                          climit [160.0]
+                          children [
+                            DEF leg_left_5_link Segment {
+                              mass 1.29096
+                              centerOfMass -0.014008 0.041801 0.038202
+                              momentsOfInertia [0.0114343 0.000969783 0.000399766 0.000969783 0.00888974 -0.00277809 0.000399766 -0.00277809 0.00506374]
+                              children [
+                                Transform {
+                                  scale 1.0 1.0 1.0
+                                  translation 0.0 0.0 0.0
+                                  rotation 0 1 0 0
+                                  children [
+                                    Inline {
+                                      url "talos-leg_left_5_link-talos-leg_left_5_link_visual.wrl"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                                
+                            DEF leg_left_6_joint Joint {
+                              jointType "rotate"
+                              jointAxis 1.0 0.0 0.0
+                              jointId 0
+                              translation -8.673617379884035e-17 1.6653345369377348e-16 0.0
+                              rotation 0 1 0 0
+                              ulimit 0.5236
+                              llimit -0.5236
+                              uvlimit 4.8
+                              lvlimit -4.8
+                              climit [100.0]
+                              children [
+                                DEF leg_left_6_link Segment {
+                                  mass 1.60777
+                                  centerOfMass -0.02022 -0.000512 -0.060167
+                                  momentsOfInertia [0.00451235 -6.75409e-05 0.00114769 -6.75409e-05 0.00755681 3.96727e-05 0.00114769 3.96727e-05 0.00561318]
+                                  children [
+                                    Transform {
+                                      scale 1.0 1.0 1.0
+                                      translation 0.0 0.0 0.0
+                                      rotation 0 1 0 0
+                                      children [
+                                        Inline {
+                                          url "talos-leg_left_6_link-talos-leg_left_6_link_visual.wrl"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                                    
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        DEF leg_right_1_joint Joint {
+          jointType "rotate"
+          jointAxis 0.0 0.0 1.0
+          jointId 11
+          translation -0.02 -0.085 -0.27105
+          rotation 0 1 0 0
+          ulimit 0.349066
+          llimit -1.5708
+          uvlimit 3.87
+          lvlimit -3.87
+          climit [100.0]
+          children [
+            DEF leg_right_1_link Segment {
+              mass 1.84559
+              centerOfMass 0.022479 -0.001067 0.031307
+              momentsOfInertia [0.00541534 0.000154287 0.00131613 0.000154287 0.00848625 1.9061e-05 0.00131613 1.9061e-05 0.00474513]
+              children [
+                Transform {
+                  scale 1.0 1.0 1.0
+                  translation 0.0 0.0 0.0
+                  rotation 0 1 0 0
+                  children [
+                    Inline {
+                      url "talos-leg_right_1_link-talos-leg_right_1_link_visual.wrl"
+                    }
+                  ]
+                }
+              ]
+            }
+                
+            DEF leg_right_2_joint Joint {
+              jointType "rotate"
+              jointAxis 1.0 0.0 0.0
+              jointId 10
+              translation -3.469446951953614e-18 -3.0531133177191805e-16 1.6653345369377348e-16
+              rotation 0 1 0 0
+              ulimit 0.5236
+              llimit -0.5236
+              uvlimit 5.8
+              lvlimit -5.8
+              climit [160.0]
+              children [
+                DEF leg_right_2_link Segment {
+                  mass 1.49095
+                  centerOfMass -0.007047 -0.025927 0.002734
+                  momentsOfInertia [0.00497152 0.000131136 -4.86648e-06 0.000131136 0.00190551 -4.58538e-05 -4.86648e-06 -4.58538e-05 0.0047429]
+                  children [
+                    Transform {
+                      scale 1.0 1.0 1.0
+                      translation 0.0 0.0 0.0
+                      rotation 0 1 0 0
+                      children [
+                        Inline {
+                          url "talos-leg_right_2_link-talos-leg_right_2_link_visual.wrl"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                    
+                DEF leg_right_3_joint Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 1.0 0.0
+                  jointId 9
+                  translation -3.469446951953614e-18 -3.0531133177191805e-16 1.6653345369377348e-16
+                  rotation 0 1 0 0
+                  ulimit 0.7
+                  llimit -2.095
+                  uvlimit 5.8
+                  lvlimit -5.8
+                  climit [160.0]
+                  children [
+                    DEF leg_right_3_link Segment {
+                      mass 6.23987
+                      centerOfMass 0.005852 -0.063697 -0.183396
+                      momentsOfInertia [0.153374 -0.000689134 0.00168034 -0.000689134 0.136481 0.0218764 0.00168034 0.0218764 0.0300159]
+                      children [
+                        Transform {
+                          scale 1.0 1.0 1.0
+                          translation 0.0 0.0 0.0
+                          rotation 0 1 0 0
+                          children [
+                            Inline {
+                              url "talos-leg_right_3_link-talos-leg_right_3_link_visual.wrl"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                        
+                    DEF leg_right_4_joint Joint {
+                      jointType "rotate"
+                      jointAxis 0.0 1.0 0.0
+                      jointId 8
+                      translation 0.0 -2.220446049250313e-16 -0.37999999999999967
+                      rotation 0 1 0 0
+                      ulimit 2.618
+                      llimit 0.0
+                      uvlimit 7.0
+                      lvlimit -7.0
+                      climit [300.0]
+                      children [
+                        DEF leg_right_4_link Segment {
+                          mass 3.75995
+                          centerOfMass 0.013177 -0.029175 -0.115946
+                          momentsOfInertia [0.0428768 -0.000437054 0.000782924 -0.000437054 0.0359891 -0.000377177 0.000782924 -0.000377177 0.0136479]
+                          children [
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.0 0.0 0.0
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-leg_right_4_link-talos-leg_right_4_link_visual.wrl"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                            
+                        DEF leg_right_5_joint Joint {
+                          jointType "rotate"
+                          jointAxis 0.0 1.0 0.0
+                          jointId 7
+                          translation 5.898059818321144e-17 -8.326672684688674e-17 -0.32499999999999984
+                          rotation 0 1 0 0
+                          ulimit 0.68
+                          llimit -1.27
+                          uvlimit 5.8
+                          lvlimit -5.8
+                          climit [160.0]
+                          children [
+                            DEF leg_right_5_link Segment {
+                              mass 1.29096
+                              centerOfMass -0.014008 -0.041801 0.038202
+                              momentsOfInertia [0.0114343 -0.000969783 0.000399766 -0.000969783 0.00888974 0.00277809 0.000399766 0.00277809 0.00506374]
+                              children [
+                                Transform {
+                                  scale 1.0 1.0 1.0
+                                  translation 0.0 0.0 0.0
+                                  rotation 0 1 0 0
+                                  children [
+                                    Inline {
+                                      url "talos-leg_right_5_link-talos-leg_right_5_link_visual.wrl"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                                
+                            DEF leg_right_6_joint Joint {
+                              jointType "rotate"
+                              jointAxis 1.0 0.0 0.0
+                              jointId 6
+                              translation -8.673617379884035e-17 -1.6653345369377348e-16 0.0
+                              rotation 0 1 0 0
+                              ulimit 0.5236
+                              llimit -0.5236
+                              uvlimit 4.8
+                              lvlimit -4.8
+                              climit [100.0]
+                              children [
+                                DEF leg_right_6_link Segment {
+                                  mass 1.60777
+                                  centerOfMass -0.02022 0.000512 -0.060167
+                                  momentsOfInertia [0.00451235 6.75409e-05 0.00114769 6.75409e-05 0.00755681 -3.96727e-05 0.00114769 -3.96727e-05 0.00561318]
+                                  children [
+                                    Transform {
+                                      scale 1.0 1.0 1.0
+                                      translation 0.0 0.0 0.0
+                                      rotation 0 1 0 0
+                                      children [
+                                        Inline {
+                                          url "talos-leg_right_6_link-talos-leg_right_6_link_visual.wrl"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                                    
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        DEF torso_1_joint Joint {
+          jointType "rotate"
+          jointAxis 0.0 0.0 1.0
+          jointId 43
+          translation 0.0 0.0 0.0722
+          rotation 0 1 0 0
+          ulimit 1.25664
+          llimit -1.25664
+          uvlimit 5.4
+          lvlimit -5.4
+          climit [200.0]
+          children [
+            DEF torso_1_link Segment {
+              mass 2.29466
+              centerOfMass 0.000782 3.5e-05 -0.017825
+              momentsOfInertia [0.00638508 -7.107e-08 -3.06559e-05 -7.107e-08 0.00410256 -1.46946e-06 -3.06559e-05 -1.46946e-06 0.00622969]
+              children [
+                Transform {
+                  scale 1.0 1.0 1.0
+                  translation 0.0 0.0 0.0
+                  rotation 0 1 0 0
+                  children [
+                    Inline {
+                      url "talos-torso_1_link-talos-torso_1_link_visual.wrl"
+                    }
+                  ]
+                }
+              ]
+            }
+                
+            DEF torso_2_joint Joint {
+              jointType "rotate"
+              jointAxis 0.0 1.0 0.0
+              jointId 42
+              translation 0.0 0.0 -1.6653345369377348e-16
+              rotation 0 1 0 0
+              ulimit 0.733038
+              llimit -0.226893
+              uvlimit 5.4
+              lvlimit -5.4
+              climit [200.0]
+              children [
+                DEF torso_2_link Segment {
+                  mass 16.984
+                  centerOfMass -0.0463 -0.00099 0.145241
+                  momentsOfInertia [0.443773 0.000690375 -0.0121178 0.000690375 0.299995 -0.000195568 -0.0121178 -0.000195568 0.322108]
+                  children [
+                    Transform {
+                      scale 1.0 1.0 1.0
+                      translation 0.0 0.0 0.0
+                      rotation 0 1 0 0
+                      children [
+                        Inline {
+                          url "talos-torso_2_link-talos-torso_2_link_visual.wrl"
+                        }
+                      ]
+                    }
+                    Transform {
+                      scale 0.9999999999999999 1.0 1.0
+                      translation 0.04925 0.0 0.078
+                      rotation -0.7071054825109251 -0.7071080798591624 9.38208944651916e-07 3.1415984546775264
+                      children [
+                        Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor 0.8 0.8 0.8
+                            }
+                          }
+                          geometry Box {
+                            size 0.01 0.01 0.01
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+                    
+                DEF arm_left_1_joint Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 0.0 1.0
+                  jointId 25
+                  translation 0.0 0.1575 0.23199999999999982
+                  rotation 0 1 0 0
+                  ulimit 0.785398
+                  llimit -1.5708
+                  uvlimit 2.7
+                  lvlimit -2.7
+                  climit [100.0]
+                  children [
+                    DEF arm_left_1_link Segment {
+                      mass 2.71457
+                      centerOfMass -0.000276 0.100602 0.044374
+                      momentsOfInertia [0.0123782 -3.62557e-05 7.14472e-05 -3.62557e-05 0.00419137 -0.000236391 7.14472e-05 -0.000236391 0.0135816]
+                      children [
+                        Transform {
+                          scale 1.0 1.0 1.0
+                          translation 0.0 0.0 0.0
+                          rotation 0 1 0 0
+                          children [
+                            Inline {
+                              url "talos-arm_left_1_link-talos-arm_left_1_link_visual.wrl"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                        
+                    DEF arm_left_2_joint Joint {
+                      jointType "rotate"
+                      jointAxis 1.0 0.0 0.0
+                      jointId 24
+                      translation 0.00493 0.13649999999999807 0.04673000000000105
+                      rotation 0 1 0 0
+                      ulimit 2.87107
+                      llimit 0.00872665
+                      uvlimit 3.66
+                      lvlimit -3.66
+                      climit [100.0]
+                      children [
+                        DEF arm_left_2_link Segment {
+                          mass 2.42509
+                          centerOfMass 0.014388 0.000929 -0.086843
+                          momentsOfInertia [0.0129782 1.20879e-05 -0.0032037 1.20879e-05 0.0138087 -0.000127701 -0.0032037 -0.000127701 0.00478857]
+                          children [
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.0 0.0 0.0
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-arm_left_2_link-talos-arm_left_2_link_visual.wrl"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                            
+                        DEF arm_left_3_joint Joint {
+                          jointType "rotate"
+                          jointAxis 0.0 0.0 1.0
+                          jointId 23
+                          translation -1.0408340855860843e-17 -3.3306690738754696e-16 -1.6653345369377348e-16
+                          rotation 0 1 0 0
+                          ulimit 2.42601
+                          llimit -2.42601
+                          uvlimit 4.58
+                          lvlimit -4.58
+                          climit [70.0]
+                          children [
+                            DEF arm_left_3_link Segment {
+                              mass 2.20874
+                              centerOfMass 0.013608 0.012416 -0.2499
+                              momentsOfInertia [0.00718831 -0.000115636 0.000759697 -0.000115636 0.00693529 0.000421347 0.000759697 0.000421347 0.00388359]
+                              children [
+                                Transform {
+                                  scale 1.0 1.0 1.0
+                                  translation 0.0 0.0 0.0
+                                  rotation 0 1 0 0
+                                  children [
+                                    Inline {
+                                      url "talos-arm_left_3_link-talos-arm_left_3_link_visual.wrl"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                                
+                            DEF arm_left_4_joint Joint {
+                              jointType "rotate"
+                              jointAxis 0.0 1.0 0.0
+                              jointId 22
+                              translation 0.019999999999999997 -2.7755575615628914e-16 -0.27300000000000024
+                              rotation 0 1 0 0
+                              ulimit 0.00349066
+                              llimit -2.23402
+                              uvlimit 4.58
+                              lvlimit -4.58
+                              climit [70.0]
+                              children [
+                                DEF arm_left_4_link Segment {
+                                  mass 0.877346
+                                  centerOfMass -0.007421 -0.02139 -0.033127
+                                  momentsOfInertia [0.00251208 0.000100701 -0.000327882 0.000100701 0.00275869 0.000400222 -0.000327882 0.000400222 0.00120736]
+                                  children [
+                                    Transform {
+                                      scale 1.0 1.0 1.0
+                                      translation 0.0 0.0 0.0
+                                      rotation 0 1 0 0
+                                      children [
+                                        Inline {
+                                          url "talos-arm_left_4_link-talos-arm_left_4_link_visual.wrl"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                                    
+                                DEF arm_left_5_joint Joint {
+                                  jointType "rotate"
+                                  jointAxis 0.0 0.0 1.0
+                                  jointId 21
+                                  translation -0.020000000000000052 6.661338147750939e-16 -0.26429999999999976
+                                  rotation 0 1 0 0
+                                  ulimit 2.51327
+                                  llimit -2.51327
+                                  uvlimit 1.95
+                                  lvlimit -1.95
+                                  climit [20.0]
+                                  children [
+                                    DEF arm_left_5_link Segment {
+                                      mass 1.87792
+                                      centerOfMass -6e-05 0.003262 0.079625
+                                      momentsOfInertia [0.00349507 1.26549e-05 1.03829e-05 1.26549e-05 0.0043683 -9.73604e-05 1.03829e-05 -9.73604e-05 0.00228263]
+                                      children [
+                                        Transform {
+                                          scale 1.0 1.0 1.0
+                                          translation 0.0 0.0 0.0
+                                          rotation 0 1 0 0
+                                          children [
+                                            Inline {
+                                              url "talos-arm_left_5_link-talos-arm_left_5_link_visual.wrl"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                        
+                                    DEF arm_left_6_joint Joint {
+                                      jointType "rotate"
+                                      jointAxis 1.0 0.0 0.0
+                                      jointId 20
+                                      translation -8.673617379884035e-19 -2.220446049250313e-16 2.7755575615628914e-16
+                                      rotation 0 1 0 0
+                                      ulimit 1.37008
+                                      llimit -1.37008
+                                      uvlimit 1.76
+                                      lvlimit -1.76
+                                      climit [8.0]
+                                      children [
+                                        DEF arm_left_6_link Segment {
+                                          mass 0.40931
+                                          centerOfMass 2.1e-05 -0.001965 -0.000591
+                                          momentsOfInertia [0.000107 -8.899e-08 -4.392e-08 -8.899e-08 0.000141013 4.1702e-07 -4.392e-08 4.1702e-07 0.000153987]
+                                          children [
+                                            Transform {
+                                              scale 1.0 1.0 1.0
+                                              translation 0.0 0.0 0.0
+                                              rotation 0 1 0 0
+                                              children [
+                                                Inline {
+                                                  url "talos-arm_left_6_link-talos-arm_left_6_link_visual.wrl"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                            
+                                        DEF arm_left_7_joint Joint {
+                                          jointType "rotate"
+                                          jointAxis 0.0 1.0 0.0
+                                          jointId 19
+                                          translation -8.673617379884035e-19 -2.220446049250313e-16 2.7755575615628914e-16
+                                          rotation 0 1 0 0
+                                          ulimit 0.680678
+                                          llimit -0.680678
+                                          uvlimit 1.76
+                                          lvlimit -1.76
+                                          climit [8.0]
+                                          children [
+                                            DEF arm_left_7_link Segment {
+                                              mass 1.04198
+                                              centerOfMass 0.002154 0.003617 -0.083795
+                                              momentsOfInertia [0.00271497 6.52241e-06 -0.000145498 6.52241e-06 0.00271797 0.000104187 -0.000145498 0.000104187 0.00106777]
+                                              children [
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 0.0
+                                                  rotation 0 1 0 0
+                                                  children [
+                                                    Inline {
+                                                      url "talos-arm_left_7_link-talos-arm_left_7_link_visual.wrl"
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 0.9999999999999999 1.0 0.9999999999999999
+                                                  translation 0.0 0.0 -0.051
+                                                  rotation 0.5773488553723223 0.5773509760969792 0.5773509760969793 2.0943972231204495
+                                                  children [
+                                                    Shape {
+                                                      geometry Cylinder {
+                                                        radius 0.0225
+                                                        height 0.0157
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 -0.063725
+                                                  rotation 1.0 -0.0 -0.0 1.5707963267948966
+                                                  children [
+                                                    Shape {
+                                                      geometry Cylinder {
+                                                        radius 0.025
+                                                        height 0.00975
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 -0.092475
+                                                  rotation 0 1 0 0
+                                                  children [
+                                                    Inline {
+                                                      url "talos-arm_left_7_link-talos-arm_left_7_link_fixed_joint_lump__gripper_left_base_link_visual_3.wrl"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                                
+                                            DEF gripper_left_inner_double_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis 1.0 0.0 0.0
+                                              jointId 14
+                                              translation 0.0 0.005249999999999755 -0.14845499999999967
+                                              rotation 0 1 0 0
+                                              ulimit 0.0
+                                              llimit -1.0472
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_left_inner_double_link Segment {
+                                                  mass 0.087986
+                                                  centerOfMass -0.013283 0.036852 -0.023153
+                                                  momentsOfInertia [7.41064e-05 -7.4773e-07 1.01536e-06 -7.4773e-07 0.000127942 2.50408e-05 1.01536e-06 2.50408e-05 0.000104952]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_left_inner_double_link-talos-gripper_left_inner_double_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                                DEF gripper_left_fingertip_1_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis 1.0 0.0 0.0
+                                                  jointId 12
+                                                  translation 0.03199999999999997 0.04588999999999971 -0.06553000000000014
+                                                  rotation 0 1 0 0
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_left_fingertip_1_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_left_fingertip_1_link-talos-gripper_left_fingertip_1_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                                DEF gripper_left_fingertip_2_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis 1.0 0.0 0.0
+                                                  jointId 13
+                                                  translation -0.032 0.04588999999999971 -0.06553000000000014
+                                                  rotation 0 1 0 0
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_left_fingertip_2_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_left_fingertip_2_link-talos-gripper_left_fingertip_2_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF gripper_left_inner_single_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis 1.0 0.0 0.0
+                                              jointId 16
+                                              translation 0.0 -0.0052500000000002545 -0.14845499999999967
+                                              rotation 0 1 0 0
+                                              ulimit 1.0472
+                                              llimit 0.0
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_left_inner_single_link Segment {
+                                                  mass 0.047177
+                                                  centerOfMass 0.0 -0.034565 -0.021412
+                                                  momentsOfInertia [4.19982e-05 1.3418e-07 1.9358e-07 1.3418e-07 3.23134e-05 -1.50914e-05 1.9358e-07 -1.50914e-05 2.16884e-05]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_left_inner_single_link-talos-gripper_left_inner_single_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                                DEF gripper_left_fingertip_3_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis -1.0 0.0 0.0
+                                                  jointId 15
+                                                  translation 1.9949319973733282e-17 -0.04589000000000018 -0.06552999999999992
+                                                  rotation 9.150835069954866e-12 -2.1183419985767065e-12 -1.0 3.141603446857037
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_left_fingertip_3_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_left_fingertip_3_link-talos-gripper_left_fingertip_3_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF gripper_left_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis 1.0 0.0 0.0
+                                              jointId 17
+                                              translation 0.0 0.020249999999999713 -0.12247499999999967
+                                              rotation 0 1 0 0
+                                              ulimit 0.0
+                                              llimit -0.959931
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [1.0]
+                                              children [
+                                                DEF gripper_left_motor_double_link Segment {
+                                                  mass 0.134356
+                                                  centerOfMass 0.019654 0.018572 -0.011998
+                                                  momentsOfInertia [0.000134799 6.18443e-05 -3.0798e-05 6.18443e-05 0.000196022 4.70772e-05 -3.0798e-05 4.70772e-05 0.000242179]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_left_motor_double_link-talos-gripper_left_motor_double_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                              ]
+                                            }
+                                            DEF gripper_left_motor_single_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis 1.0 0.0 0.0
+                                              jointId 18
+                                              translation 0.0 -0.020250000000000268 -0.12247499999999967
+                                              rotation 0 1 0 0
+                                              ulimit 1.0472
+                                              llimit 0.0
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_left_motor_single_link Segment {
+                                                  mass 0.107923
+                                                  centerOfMass 0.025237 -0.011231 -0.008158
+                                                  momentsOfInertia [8.97366e-05 -4.08203e-05 -1.9271e-05 -4.08203e-05 0.000119573 -2.87328e-05 -1.9271e-05 -2.87328e-05 0.000154691]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_left_motor_single_link-talos-gripper_left_motor_single_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+                DEF arm_right_1_joint Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 0.0 1.0
+                  jointId 39
+                  translation 0.0 -0.1575 0.23199999999999982
+                  rotation 0 1 0 0
+                  ulimit 1.5708
+                  llimit -0.785398
+                  uvlimit 2.7
+                  lvlimit -2.7
+                  climit [100.0]
+                  children [
+                    DEF arm_right_1_link Segment {
+                      mass 2.71457
+                      centerOfMass -0.000276 -0.100602 0.044374
+                      momentsOfInertia [0.0123782 3.62557e-05 7.14472e-05 3.62557e-05 0.00419137 0.000236391 7.14472e-05 0.000236391 0.0135816]
+                      children [
+                        Transform {
+                          scale 1.0 1.0 1.0
+                          translation 0.0 0.0 0.0
+                          rotation 0 1 0 0
+                          children [
+                            Inline {
+                              url "talos-arm_right_1_link-talos-arm_right_1_link_visual.wrl"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                        
+                    DEF arm_right_2_joint Joint {
+                      jointType "rotate"
+                      jointAxis 1.0 0.0 0.0
+                      jointId 38
+                      translation 0.00493 -0.13649999999999807 0.046730000000001104
+                      rotation 0 1 0 0
+                      ulimit -0.00872665
+                      llimit -2.87107
+                      uvlimit 3.66
+                      lvlimit -3.66
+                      climit [100.0]
+                      children [
+                        DEF arm_right_2_link Segment {
+                          mass 2.42509
+                          centerOfMass 0.014388 -0.000929 -0.086843
+                          momentsOfInertia [0.0129782 -1.20879e-05 -0.0032037 -1.20879e-05 0.0138087 0.000127701 -0.0032037 0.000127701 0.00478857]
+                          children [
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.0 0.0 0.0
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-arm_right_2_link-talos-arm_right_2_link_visual.wrl"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                            
+                        DEF arm_right_3_joint Joint {
+                          jointType "rotate"
+                          jointAxis 0.0 0.0 1.0
+                          jointId 37
+                          translation -1.0408340855860843e-17 3.3306690738754696e-16 -1.6653345369377348e-16
+                          rotation 0 1 0 0
+                          ulimit 2.42601
+                          llimit -2.42601
+                          uvlimit 4.58
+                          lvlimit -4.58
+                          climit [70.0]
+                          children [
+                            DEF arm_right_3_link Segment {
+                              mass 2.20874
+                              centerOfMass 0.013608 -0.012416 -0.2499
+                              momentsOfInertia [0.00718831 0.000115636 0.000759697 0.000115636 0.00693529 -0.000421347 0.000759697 -0.000421347 0.00388359]
+                              children [
+                                Transform {
+                                  scale 1.0 1.0 1.0
+                                  translation 0.0 0.0 0.0
+                                  rotation 0 1 0 0
+                                  children [
+                                    Inline {
+                                      url "talos-arm_right_3_link-talos-arm_right_3_link_visual.wrl"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                                
+                            DEF arm_right_4_joint Joint {
+                              jointType "rotate"
+                              jointAxis 0.0 1.0 0.0
+                              jointId 36
+                              translation 0.019999999999999997 2.7755575615628914e-16 -0.27300000000000024
+                              rotation 0 1 0 0
+                              ulimit 0.00349066
+                              llimit -2.23402
+                              uvlimit 4.58
+                              lvlimit -4.58
+                              climit [70.0]
+                              children [
+                                DEF arm_right_4_link Segment {
+                                  mass 0.877346
+                                  centerOfMass -0.007421 0.02139 -0.033127
+                                  momentsOfInertia [0.00251208 -0.000100701 -0.000327882 -0.000100701 0.00275869 -0.000400222 -0.000327882 -0.000400222 0.00120736]
+                                  children [
+                                    Transform {
+                                      scale 1.0 1.0 1.0
+                                      translation 0.0 0.0 0.0
+                                      rotation 0 1 0 0
+                                      children [
+                                        Inline {
+                                          url "talos-arm_right_4_link-talos-arm_right_4_link_visual.wrl"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                                    
+                                DEF arm_right_5_joint Joint {
+                                  jointType "rotate"
+                                  jointAxis 0.0 0.0 1.0
+                                  jointId 35
+                                  translation -0.020000000000000052 -5.551115123125783e-16 -0.26429999999999976
+                                  rotation 0 1 0 0
+                                  ulimit 2.51327
+                                  llimit -2.51327
+                                  uvlimit 1.95
+                                  lvlimit -1.95
+                                  climit [20.0]
+                                  children [
+                                    DEF arm_right_5_link Segment {
+                                      mass 1.87792
+                                      centerOfMass -6e-05 -0.003262 0.079625
+                                      momentsOfInertia [0.00349507 -1.26549e-05 1.03829e-05 -1.26549e-05 0.0043683 9.73604e-05 1.03829e-05 9.73604e-05 0.00228263]
+                                      children [
+                                        Transform {
+                                          scale 1.0 1.0 1.0
+                                          translation 0.0 0.0 0.0
+                                          rotation 0 1 0 0
+                                          children [
+                                            Inline {
+                                              url "talos-arm_right_5_link-talos-arm_right_5_link_visual.wrl"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                        
+                                    DEF arm_right_6_joint Joint {
+                                      jointType "rotate"
+                                      jointAxis 1.0 0.0 0.0
+                                      jointId 34
+                                      translation -8.673617379884035e-19 4.440892098500626e-16 2.7755575615628914e-16
+                                      rotation 0 1 0 0
+                                      ulimit 1.37008
+                                      llimit -1.37008
+                                      uvlimit 1.76
+                                      lvlimit -1.76
+                                      climit [8.0]
+                                      children [
+                                        DEF arm_right_6_link Segment {
+                                          mass 0.40931
+                                          centerOfMass 2.1e-05 0.001965 -0.000591
+                                          momentsOfInertia [0.000107 8.899e-08 -4.392e-08 8.899e-08 0.000141013 -4.1702e-07 -4.392e-08 -4.1702e-07 0.000153987]
+                                          children [
+                                            Transform {
+                                              scale 1.0 1.0 1.0
+                                              translation 0.0 0.0 0.0
+                                              rotation 0 1 0 0
+                                              children [
+                                                Inline {
+                                                  url "talos-arm_right_6_link-talos-arm_right_6_link_visual.wrl"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                            
+                                        DEF arm_right_7_joint Joint {
+                                          jointType "rotate"
+                                          jointAxis 0.0 1.0 0.0
+                                          jointId 33
+                                          translation -8.673617379884035e-19 4.440892098500626e-16 2.7755575615628914e-16
+                                          rotation 0 1 0 0
+                                          ulimit 0.680678
+                                          llimit -0.680678
+                                          uvlimit 1.76
+                                          lvlimit -1.76
+                                          climit [8.0]
+                                          children [
+                                            DEF arm_right_7_link Segment {
+                                              mass 1.04198
+                                              centerOfMass 0.002301 -0.003617 -0.083795
+                                              momentsOfInertia [0.00271497 -6.97243e-07 -0.000125679 -6.97243e-07 0.00271729 -0.000104187 -0.000125679 -0.000104187 0.00106709]
+                                              children [
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 0.0
+                                                  rotation 0 1 0 0
+                                                  children [
+                                                    Inline {
+                                                      url "talos-arm_right_7_link-talos-arm_right_7_link_visual.wrl"
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 0.9999999999999999 1.0 0.9999999999999999
+                                                  translation 0.0 0.0 -0.051
+                                                  rotation 0.5773488553723223 -0.5773509760969792 -0.5773509760969793 2.0943972231204495
+                                                  children [
+                                                    Shape {
+                                                      geometry Cylinder {
+                                                        radius 0.0225
+                                                        height 0.0157
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 -0.063725
+                                                  rotation 9.381776372234391e-07 -0.7071067811862364 -0.7071067811862364 3.14160422456116
+                                                  children [
+                                                    Shape {
+                                                      geometry Cylinder {
+                                                        radius 0.025
+                                                        height 0.00975
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Transform {
+                                                  scale 1.0 1.0 1.0
+                                                  translation 0.0 0.0 -0.092475
+                                                  rotation -0.0 -0.0 -1.0 3.1416034468570464
+                                                  children [
+                                                    Inline {
+                                                      url "talos-arm_right_7_link-talos-arm_right_7_link_fixed_joint_lump__gripper_right_base_link_visual_3.wrl"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                                
+                                            DEF gripper_right_inner_double_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis -1.0 0.0 0.0
+                                              jointId 28
+                                              translation 0.0 -0.005249999999999533 -0.14845499999999967
+                                              rotation 4.7123083164836995e-11 8.252097127712865e-14 -1.0 3.141603446860543
+                                              ulimit 0.0
+                                              llimit -1.0472
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_right_inner_double_link Segment {
+                                                  mass 0.087986
+                                                  centerOfMass -0.013283 0.036852 -0.023153
+                                                  momentsOfInertia [7.41064e-05 -7.4773e-07 1.01536e-06 -7.4773e-07 0.000127942 2.50408e-05 1.01536e-06 2.50408e-05 0.000104952]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_right_inner_double_link-talos-gripper_right_inner_double_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                                DEF gripper_right_fingertip_1_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis 0.999999999942 1.0793267253e-05 0.0
+                                                  jointId 26
+                                                  translation 0.032000121773122975 0.04588991508496504 -0.06552999999999992
+                                                  rotation 0 1 0 0
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_right_fingertip_1_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_right_fingertip_1_link-talos-gripper_right_fingertip_1_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                                DEF gripper_right_fingertip_2_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis 0.999999999942 1.0793267253e-05 0.0
+                                                  jointId 27
+                                                  translation -0.031999878226651735 0.045890084914711804 -0.06552999999999992
+                                                  rotation 0 1 0 0
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_right_fingertip_2_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_right_fingertip_2_link-talos-gripper_right_fingertip_2_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF gripper_right_inner_single_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis -1.0 0.0 0.0
+                                              jointId 30
+                                              translation 0.0 0.0052500000000004765 -0.14845499999999967
+                                              rotation 4.7123083164836995e-11 8.252097127712865e-14 -1.0 3.141603446860543
+                                              ulimit 1.0472
+                                              llimit 0.0
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_right_inner_single_link Segment {
+                                                  mass 0.047177
+                                                  centerOfMass 0.0 -0.034565 -0.021412
+                                                  momentsOfInertia [4.19982e-05 1.3418e-07 1.9358e-07 1.3418e-07 3.23134e-05 -1.50914e-05 1.9358e-07 -1.50914e-05 2.16884e-05]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_right_inner_single_link-talos-gripper_right_inner_single_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                                DEF gripper_right_fingertip_3_joint Joint {
+                                                  jointType "rotate"
+                                                  jointAxis -0.999999999942 -1.0793267253e-05 0.0
+                                                  jointId 29
+                                                  translation -1.217732356019116e-07 -0.04588999999983867 -0.06553000000000003
+                                                  rotation -1.3482673335994629e-11 -1.70593119444412e-13 1.0 3.1416034468630842
+                                                  ulimit 1.0472
+                                                  llimit 0.0
+                                                  uvlimit 1.0
+                                                  lvlimit -1.0
+                                                  climit [100.0]
+                                                  children [
+                                                    DEF gripper_right_fingertip_3_link Segment {
+                                                      mass 0.026301
+                                                      centerOfMass 0.0 0.004604 -0.002537
+                                                      momentsOfInertia [8e-06 0.0 0.0 0.0 8.69179e-06 -1.43612e-06 0.0 -1.43612e-06 2.3082e-06]
+                                                      children [
+                                                        Transform {
+                                                          scale 1.0 1.0 1.0
+                                                          translation 0.0 0.0 0.0
+                                                          rotation 0 1 0 0
+                                                          children [
+                                                            Inline {
+                                                              url "talos-gripper_right_fingertip_3_link-talos-gripper_right_fingertip_3_link_visual.wrl"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                        
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF gripper_right_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis -1.0 0.0 0.0
+                                              jointId 31
+                                              translation 0.0 -0.02024999999999949 -0.12247499999999967
+                                              rotation 4.7123083164836995e-11 8.252097127712865e-14 -1.0 3.141603446860543
+                                              ulimit 0.0
+                                              llimit -0.959931
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [1.0]
+                                              children [
+                                                DEF gripper_right_motor_double_link Segment {
+                                                  mass 0.134356
+                                                  centerOfMass 0.019654 0.018572 -0.011998
+                                                  momentsOfInertia [0.000134799 6.18443e-05 -3.0798e-05 6.18443e-05 0.000196022 4.70772e-05 -3.0798e-05 4.70772e-05 0.000242179]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_right_motor_double_link-talos-gripper_right_motor_double_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                              ]
+                                            }
+                                            DEF gripper_right_motor_single_joint Joint {
+                                              jointType "rotate"
+                                              jointAxis -1.0 0.0 0.0
+                                              jointId 32
+                                              translation 0.0 0.02025000000000049 -0.12247499999999967
+                                              rotation 4.7123083164836995e-11 8.252097127712865e-14 -1.0 3.141603446860543
+                                              ulimit 1.0472
+                                              llimit 0.0
+                                              uvlimit 1.0
+                                              lvlimit -1.0
+                                              climit [100.0]
+                                              children [
+                                                DEF gripper_right_motor_single_link Segment {
+                                                  mass 0.107923
+                                                  centerOfMass 0.025237 -0.011231 -0.008158
+                                                  momentsOfInertia [8.97366e-05 -4.08203e-05 -1.9271e-05 -4.08203e-05 0.000119573 -2.87328e-05 -1.9271e-05 -2.87328e-05 0.000154691]
+                                                  children [
+                                                    Transform {
+                                                      scale 1.0 1.0 1.0
+                                                      translation 0.0 0.0 0.0
+                                                      rotation 0 1 0 0
+                                                      children [
+                                                        Inline {
+                                                          url "talos-gripper_right_motor_single_link-talos-gripper_right_motor_single_link_visual.wrl"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                                    
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+                DEF head_1_joint Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 1.0 0.0
+                  jointId 41
+                  translation 0.02 0.0 0.3209999999999998
+                  rotation 0 1 0 0
+                  ulimit 0.785398
+                  llimit -0.20944
+                  uvlimit 1.0
+                  lvlimit -1.0
+                  climit [8.0]
+                  children [
+                    DEF head_1_link Segment {
+                      mass 0.73746
+                      centerOfMass -0.001572 -0.001579 0.021758
+                      momentsOfInertia [0.00224879 4.69375e-06 8.55557e-05 4.69375e-06 0.00111158 -4.13254e-05 8.55557e-05 -4.13254e-05 0.00205226]
+                      children [
+                        Transform {
+                          scale 1.0 1.0 1.0
+                          translation 0.0 0.0 0.0
+                          rotation 0 1 0 0
+                          children [
+                            Inline {
+                              url "talos-head_1_link-talos-head_1_link_visual.wrl"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                        
+                    DEF head_2_joint Joint {
+                      jointType "rotate"
+                      jointAxis 0.0 0.0 1.0
+                      jointId 40
+                      translation 1.734723475976807e-16 -2.1826984664130577e-17 -5.551115123125783e-17
+                      rotation 0 1 0 0
+                      ulimit 1.309
+                      llimit -1.309
+                      uvlimit 1.0
+                      lvlimit -1.0
+                      climit [4.0]
+                      children [
+                        DEF head_2_link Segment {
+                          mass 1.46395
+                          centerOfMass 0.010791 5.1e-05 0.142137
+                          momentsOfInertia [0.01094 1.05672e-05 0.000353182 1.05672e-05 0.0110845 2.40168e-05 0.000353182 2.40168e-05 0.00580879]
+                          children [
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.0 0.0 0.0
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-head_2_link-talos-head_2_link_visual.wrl"
+                                }
+                              ]
+                            }
+                            Transform {
+                              scale 1.0 1.0 1.0
+                              translation 0.066 0.0 0.1982
+                              rotation 0 1 0 0
+                              children [
+                                Inline {
+                                  url "talos-head_2_link-talos-head_2_link_fixed_joint_lump__rgbd_link_visual_1.wrl"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                            
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  joints [
+    USE leg_left_6_joint,
+    USE leg_left_5_joint,
+    USE leg_left_4_joint,
+    USE leg_left_3_joint,
+    USE leg_left_2_joint,
+    USE leg_left_1_joint,
+    USE leg_right_6_joint,
+    USE leg_right_5_joint,
+    USE leg_right_4_joint,
+    USE leg_right_3_joint,
+    USE leg_right_2_joint,
+    USE leg_right_1_joint,
+    USE gripper_left_fingertip_1_joint,
+    USE gripper_left_fingertip_2_joint,
+    USE gripper_left_inner_double_joint,
+    USE gripper_left_fingertip_3_joint,
+    USE gripper_left_inner_single_joint,
+    USE gripper_left_joint,
+    USE gripper_left_motor_single_joint,
+    USE arm_left_7_joint,
+    USE arm_left_6_joint,
+    USE arm_left_5_joint,
+    USE arm_left_4_joint,
+    USE arm_left_3_joint,
+    USE arm_left_2_joint,
+    USE arm_left_1_joint,
+    USE gripper_right_fingertip_1_joint,
+    USE gripper_right_fingertip_2_joint,
+    USE gripper_right_inner_double_joint,
+    USE gripper_right_fingertip_3_joint,
+    USE gripper_right_inner_single_joint,
+    USE gripper_right_joint,
+    USE gripper_right_motor_single_joint,
+    USE arm_right_7_joint,
+    USE arm_right_6_joint,
+    USE arm_right_5_joint,
+    USE arm_right_4_joint,
+    USE arm_right_3_joint,
+    USE arm_right_2_joint,
+    USE arm_right_1_joint,
+    USE head_2_joint,
+    USE head_1_joint,
+    USE torso_2_joint,
+    USE torso_1_joint
+  ]
+  
+  name "base_link"
+  version "1.0"
+}
